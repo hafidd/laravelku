@@ -6,6 +6,7 @@ laravel + tailwind (vite)
 ```composer install```            
 ```cp .env.example .env``` , sesuaikan pengaturan database di .env      
 ```php artisan key:generate```      
+```php artisan migrate:fresh --seed```      
 ```npm install```   
 ```npm run dev``` / ```npm run build```     
 ```php artisan serve```   
