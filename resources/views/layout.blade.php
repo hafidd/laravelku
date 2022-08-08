@@ -9,7 +9,7 @@
 </head>
 
 <body class="antialiased">
-    <div class="min-h-screen w-full flex flex-col">
+    <div class="min-h-screen w-full flex flex-col items-center">
         <div class="flex p-2 px-4 border-b w-full justify-between">
             <p class="font-bold text-lg">Laravelku</p>
             @if (Route::has('login'))

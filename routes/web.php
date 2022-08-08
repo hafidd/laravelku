@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,7 +39,13 @@ Route::prefix('user')->group(function () {
 
 // products
 Route::prefix('product')->group(function () {
-    Route::get('/', function () {
-        return "products page";
-    })->name('product');
+    Route::get('/', [ProductController::class, 'index'])->name('product');
+    Route::middleware('auth')->group(function () {
+        Route::get('/create', [ProductController::class, 'create']);
+        Route::post('/', [ProductController::class, 'store']);
+        Route::get('/{product}/edit', [ProductController::class, 'edit']);
+        Route::put('/{product}', [ProductController::class, 'update']);
+        Route::delete('/{product}', [ProductController::class, 'destroy']);
+    });
+    Route::get('/{product}', [ProductController::class, 'show']);
 });
