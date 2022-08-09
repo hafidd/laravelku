@@ -19,7 +19,7 @@ class ProductController extends Controller
         return view('product.index', ["products" => $products]);
     }
 
-    public function view(Product $product)
+    public function show(Product $product)
     {
         dd($product);
         return "under constuction";
