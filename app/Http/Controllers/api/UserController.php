@@ -22,6 +22,7 @@ class UserController extends Controller
             /** @var \App\Models\User $user **/
             $user = Auth::user();
             $data = [
+		'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
                 'token' => $user->createToken('token')->plainTextToken,
@@ -29,7 +30,7 @@ class UserController extends Controller
             return response()->json(['data' => $data, 'message' => 'login success']);
         }
 
-        return response()->json(['message' => 'Unauthorised'], 401);
+        return response()->json(['message' => 'Unauthorized'], 401);
     }
 
     public function register(Request $req)
@@ -43,6 +44,7 @@ class UserController extends Controller
         $fields["password"] = Hash::make($fields["password"]);
         $user = User::create($fields);
         $data = [
+	    'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
             'token' => $user->createToken('token')->plainTextToken,

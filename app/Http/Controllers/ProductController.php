@@ -9,12 +9,25 @@ class ProductController extends Controller
 {
     public function index(Request $req)
     {
-        $products = Product::orderBy("name");
+        $products =  Product::query();
+        // ?order=name:asc,price:desc
+        if ($req->order) {
+            $cols = ['name', 'price', 'id', 'stock', 'sn'];
+            $orders = explode(",", $req->order);
+            foreach ($orders as $order) {
+                $col = explode(":", $order);
+                if (in_array($col[0], $cols)) {
+                    $products = $products->orderBy($col[0], (isset($col[1]) &&  $col[1] === "desc") ? "desc" : "asc");
+                }
+            }
+        }
+        // ?search=test
         if ($req->search) {
             $products = $products->where('name', 'like', '%' . $req->search . '%')
                 ->orWhere('sn', 'like', '%' . $req->search . '%');
         }
-        $products = $products->paginate(10);
+        // ?perPage=20
+        $products = $products->paginate(isset($req->perPage) ? (int)$req->perPage : 10);
 
         return view('product.index', ["products" => $products]);
     }
@@ -22,7 +35,6 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         dd($product);
-        return "under constuction";
     }
 
     public function create()
