@@ -7,27 +7,14 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    // ?search=test&order=name:asc,price:desc&perPage=20
     public function index(Request $req)
     {
-        $products =  Product::query();
-        // ?order=name:asc,price:desc
-        if ($req->order) {
-            $cols = ['name', 'price', 'id', 'stock', 'sn'];
-            $orders = explode(",", $req->order);
-            foreach ($orders as $order) {
-                $col = explode(":", $order);
-                if (in_array($col[0], $cols)) {
-                    $products = $products->orderBy($col[0], (isset($col[1]) &&  $col[1] === "desc") ? "desc" : "asc");
-                }
-            }
-        }
-        // ?search=test
-        if ($req->search) {
-            $products = $products->where('name', 'like', '%' . $req->search . '%')
-                ->orWhere('sn', 'like', '%' . $req->search . '%');
-        }
-        // ?perPage=20
-        $products = $products->paginate(isset($req->perPage) ? (int)$req->perPage : 10);
+        $perPage = isset($req->perPage) ? (int)$req->perPage : 10;
+
+        $products = Product::search($req->search)
+            ->order($req->order)
+            ->paginate($perPage);
 
         return view('product.index', ["products" => $products]);
     }

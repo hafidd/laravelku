@@ -5,43 +5,21 @@ namespace App\Http\Controllers\api;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 
 class ProductController extends Controller
 {
+    // ?search=test&order=name:asc,price:desc&perPage=20
     public function index(Request $req)
     {
-        $products =  Product::query();
-        // ?order=name:asc,price:desc
-        if ($req->order) {
-            $cols = ['name', 'price', 'id', 'stock', 'sn'];
-            $orders = explode(",", $req->order);
-            foreach ($orders as $order) {
-                $col = explode(":", $order);
-                if (in_array($col[0], $cols)) {
-                    $products = $products->orderBy($col[0], (isset($col[1]) &&  $col[1] === "desc") ? "desc" : "asc");
-                }
-            }
-        }
-        // ?search=test
-        if ($req->search) {
-            $products = $products->where('name', 'like', '%' . $req->search . '%')
-                ->orWhere('sn', 'like', '%' . $req->search . '%');
-        }
-        // ?perPage=20
-        $products = $products->paginate(isset($req->perPage) ? (int)$req->perPage : 10);
+        $perPage = isset($req->perPage) ? (int)$req->perPage : 10;
 
-        return response()->json([
-            'data' => ProductResource::collection($products),
-            'pagination' => [
-                'total' => $products->total(),
-                'lastPage' => $products->lastPage(),
-                'perPage' => $products->perPage(),
-                'currentPage' => $products->currentPage(),
-                'nextPageUrl' => $products->nextPageUrl(),
-                'previousPageUrl' => $products->previousPageUrl(),
-            ]
-        ]);
+        $products = Product::search($req->search)
+            ->order($req->order)
+            ->paginate($perPage);
+
+        return new ProductCollection($products);
     }
 
     public function show(Product $product)
