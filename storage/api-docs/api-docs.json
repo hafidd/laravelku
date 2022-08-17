@@ -1,0 +1,441 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Laravel Swagger API documentation example",
+        "contact": {
+            "email": "admin@example.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/products": {
+            "get": {
+                "tags": [
+                    "products"
+                ],
+                "summary": "Display a listing of the products",
+                "operationId": "getProductsByParams",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "The page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "products"
+                ],
+                "summary": "create a new product",
+                "operationId": "createProduct",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProductRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductSchema"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/products/{id}": {
+            "get": {
+                "tags": [
+                    "products"
+                ],
+                "summary": "show product",
+                "operationId": "showProduct",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of product",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductSchema"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "products"
+                ],
+                "summary": "update product",
+                "operationId": "updateProduct",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of product",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "21"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProductRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductSchema"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "products"
+                ],
+                "summary": "delete product",
+                "operationId": "deleteProduct",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of product",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "21"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "login",
+                "operationId": "login",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "example": "test@mail.com"
+                                    },
+                                    "password": {
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "register",
+                "operationId": "register",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "example": "test"
+                                    },
+                                    "email": {
+                                        "example": "test@mail.com"
+                                    },
+                                    "password": {
+                                        "example": "password"
+                                    },
+                                    "password_confirmation": {
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ProductRequest": {
+                "title": "ProductRequest",
+                "description": "ProductRequest",
+                "required": [
+                    "name",
+                    "sn",
+                    "price",
+                    "stock"
+                ],
+                "properties": {
+                    "sn": {
+                        "$ref": "#/components/schemas/ProductSchema/properties/sn"
+                    },
+                    "name": {
+                        "$ref": "#/components/schemas/ProductSchema/properties/name"
+                    },
+                    "desc": {
+                        "$ref": "#/components/schemas/ProductSchema/properties/desc"
+                    },
+                    "price": {
+                        "$ref": "#/components/schemas/ProductSchema/properties/price"
+                    },
+                    "stock": {
+                        "$ref": "#/components/schemas/ProductSchema/properties/stock"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "ProductRequest"
+                }
+            },
+            "ProductSchema": {
+                "title": "ProductSchema",
+                "description": "ProductSchema",
+                "required": [
+                    "id",
+                    "name",
+                    "sn",
+                    "price",
+                    "stock"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Unique ID",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "sn": {
+                        "description": "unique product serial number",
+                        "type": "string",
+                        "example": "KDX0000001"
+                    },
+                    "name": {
+                        "description": "Product name",
+                        "type": "string",
+                        "example": "Iphong 669"
+                    },
+                    "desc": {
+                        "description": "Product description",
+                        "type": "string",
+                        "example": "Iphong 669 description"
+                    },
+                    "price": {
+                        "description": "Product price",
+                        "type": "number",
+                        "format": "currency",
+                        "example": 25000
+                    },
+                    "stock": {
+                        "description": "Product stock",
+                        "type": "number",
+                        "example": 20
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "ProductSchema"
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
