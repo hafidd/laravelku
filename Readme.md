@@ -10,4 +10,11 @@ laravel + tailwind (vite)
 ```npm install```   
 ```npm run dev``` / ```npm run build```     
 ```php artisan serve```   
+  
+    
+l5-swagger api documentation : /api/documentation
+  
+
+
+
 
