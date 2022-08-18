@@ -13,27 +13,27 @@ namespace App\Virtual\Requests;
 class ProductRequest
 {
     /** 
-     * @OA\Property(ref="#/components/schemas/ProductSchema/properties/sn")
+     * @OA\Property(ref="#/components/schemas/Product/properties/sn")
      */
     public $sn;
 
     /** 
-     * @OA\Property(ref="#/components/schemas/ProductSchema/properties/name")
+     * @OA\Property(ref="#/components/schemas/Product/properties/name")
      */
     public $name;
 
     /** 
-     * @OA\Property(ref="#/components/schemas/ProductSchema/properties/desc")
+     * @OA\Property(ref="#/components/schemas/Product/properties/desc")
      */
     public $desc;
 
     /** 
-     * @OA\Property(ref="#/components/schemas/ProductSchema/properties/price")
+     * @OA\Property(ref="#/components/schemas/Product/properties/price")
      */
     public $price;
 
     /** 
-     * @OA\Property(ref="#/components/schemas/ProductSchema/properties/stock")
+     * @OA\Property(ref="#/components/schemas/Product/properties/stock")
      */
     public $stock;
 }

@@ -14,7 +14,7 @@ class ProductCollection extends BaseCollection
     /**
      * @OA\Property(
      *      description="array of products",
-     *      @OA\Items(ref="#/components/schemas/ProductSchema")
+     *      @OA\Items(ref="#/components/schemas/Product")
      * )
      * @var array
      */

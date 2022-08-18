@@ -5,12 +5,11 @@ namespace App\Http\Controllers\api;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductController extends Controller
 {
-
     /**
      * @OA\Get(
      *     path="/api/products",
@@ -33,7 +32,7 @@ class ProductController extends Controller
             ->order($req->order)
             ->paginate($perPage);
 
-        return new ProductCollection($products);
+        return ProductResource::collection($products);
     }
 
     /**
@@ -50,7 +49,7 @@ class ProductController extends Controller
      *         example="1",
      *         @OA\Schema(type="integer",),
      *     ),
-     *     @OA\Response(response="200", description="ok", @OA\JsonContent(ref="#/components/schemas/ProductSchema")),
+     *     @OA\Response(response="200", description="ok", @OA\JsonContent(ref="#/components/schemas/Product")),
      *     @OA\Response(response="404", description="Not found", @OA\JsonContent()),
      * )
      *
@@ -60,7 +59,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return response()->json(new ProductResource($product));
+        return response()->json(new JsonResource($product));
     }
 
     /**
@@ -71,7 +70,7 @@ class ProductController extends Controller
      *     summary="create a new product",
      *     security={{"bearerAuth":{}}},
      *     @OA\RequestBody( @OA\JsonContent(ref="#/components/schemas/ProductRequest") ),
-     *     @OA\Response(response="200", description="ok", @OA\JsonContent(ref="#/components/schemas/ProductSchema")),
+     *     @OA\Response(response="200", description="ok", @OA\JsonContent(ref="#/components/schemas/Product")),
      *     @OA\Response(response="401", description="Unauthorized", @OA\JsonContent(ref="#/components/schemas/UnauthorizedResponse")),
      *     @OA\Response(response="422", description="Unprocessable Content", @OA\JsonContent()),
      * )
@@ -92,7 +91,7 @@ class ProductController extends Controller
 
         $product = Product::create($fields);
 
-        return response()->json(new ProductResource($product));
+        return response()->json(new JsonResource($product));
     }
 
     /**
@@ -111,7 +110,7 @@ class ProductController extends Controller
      *         @OA\Schema(type="integer",),
      *     ),
      *     @OA\RequestBody( @OA\JsonContent(ref="#/components/schemas/ProductRequest") ),
-     *     @OA\Response(response="200", description="ok", @OA\JsonContent(ref="#/components/schemas/ProductSchema")),
+     *     @OA\Response(response="200", description="ok", @OA\JsonContent(ref="#/components/schemas/Product")),
      *     @OA\Response(response="401", description="Unauthorized", @OA\JsonContent()),
      *     @OA\Response(response="422", description="Unprocessable Content", @OA\JsonContent()),
      * )
@@ -132,7 +131,7 @@ class ProductController extends Controller
 
         $product->update($fields);
 
-        return response()->json(new ProductResource($product));
+        return response()->json(new JsonResource($product));
     }
 
     /**

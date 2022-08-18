@@ -65,7 +65,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ProductSchema"
+                                    "$ref": "#/components/schemas/Product"
                                 }
                             }
                         }
@@ -121,7 +121,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ProductSchema"
+                                    "$ref": "#/components/schemas/Product"
                                 }
                             }
                         }
@@ -169,7 +169,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ProductSchema"
+                                    "$ref": "#/components/schemas/Product"
                                 }
                             }
                         }
@@ -355,6 +355,59 @@
     },
     "components": {
         "schemas": {
+            "Product": {
+                "title": "Product",
+                "description": "Product",
+                "properties": {
+                    "id": {
+                        "description": "Auto UniqueID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "sn": {
+                        "description": "Unique product code",
+                        "type": "string",
+                        "example": "KDX0000001"
+                    },
+                    "name": {
+                        "description": "Product name",
+                        "type": "string",
+                        "example": "Iphong 669"
+                    },
+                    "desc": {
+                        "description": "Product description",
+                        "type": "string",
+                        "example": "Iphong 669 description"
+                    },
+                    "price": {
+                        "description": "Product price",
+                        "type": "number",
+                        "format": "currency",
+                        "example": 25000000
+                    },
+                    "stock": {
+                        "description": "Product stock",
+                        "type": "number",
+                        "example": 20
+                    },
+                    "created_at": {
+                        "description": "data created at",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2022-08-12"
+                    },
+                    "updated_at": {
+                        "description": "data updated at",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2022-08-12"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Product"
+                }
+            },
             "BaseCollection": {
                 "title": "BaseCollection",
                 "description": "BaseCollection",
@@ -457,7 +510,7 @@
                                 "description": "array of products",
                                 "type": "array",
                                 "items": {
-                                    "$ref": "#/components/schemas/ProductSchema"
+                                    "$ref": "#/components/schemas/Product"
                                 }
                             }
                         }
@@ -475,19 +528,19 @@
                 ],
                 "properties": {
                     "sn": {
-                        "$ref": "#/components/schemas/ProductSchema/properties/sn"
+                        "$ref": "#/components/schemas/Product/properties/sn"
                     },
                     "name": {
-                        "$ref": "#/components/schemas/ProductSchema/properties/name"
+                        "$ref": "#/components/schemas/Product/properties/name"
                     },
                     "desc": {
-                        "$ref": "#/components/schemas/ProductSchema/properties/desc"
+                        "$ref": "#/components/schemas/Product/properties/desc"
                     },
                     "price": {
-                        "$ref": "#/components/schemas/ProductSchema/properties/price"
+                        "$ref": "#/components/schemas/Product/properties/price"
                     },
                     "stock": {
-                        "$ref": "#/components/schemas/ProductSchema/properties/stock"
+                        "$ref": "#/components/schemas/Product/properties/stock"
                     }
                 },
                 "type": "object",
@@ -506,59 +559,6 @@
                 "type": "object",
                 "xml": {
                     "name": "Unauthorized"
-                }
-            },
-            "ProductSchema": {
-                "title": "ProductSchema",
-                "description": "ProductSchema",
-                "properties": {
-                    "id": {
-                        "description": "Unique ID",
-                        "type": "integer",
-                        "example": "1"
-                    },
-                    "sn": {
-                        "description": "unique product serial number",
-                        "type": "string",
-                        "example": "KDX0000001"
-                    },
-                    "name": {
-                        "description": "Product name",
-                        "type": "string",
-                        "example": "Iphong 669"
-                    },
-                    "desc": {
-                        "description": "Product description",
-                        "type": "string",
-                        "example": "Iphong 669 description"
-                    },
-                    "price": {
-                        "description": "Product price",
-                        "type": "number",
-                        "format": "currency",
-                        "example": 25000
-                    },
-                    "stock": {
-                        "description": "Product stock",
-                        "type": "number",
-                        "example": 20
-                    },
-                    "created_at": {
-                        "description": "Product stock",
-                        "type": "string",
-                        "format": "date",
-                        "example": 20
-                    },
-                    "updated_at": {
-                        "description": "Product stock",
-                        "type": "string",
-                        "format": "date",
-                        "example": 20
-                    }
-                },
-                "type": "object",
-                "xml": {
-                    "name": "ProductSchema"
                 }
             }
         },
