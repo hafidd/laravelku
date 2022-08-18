@@ -36,7 +36,9 @@
                         "description": "ok",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductCollection"
+                                }
                             }
                         }
                     }
@@ -72,7 +74,9 @@
                         "description": "Unauthorized",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedResponse"
+                                }
                             }
                         }
                     },
@@ -351,6 +355,115 @@
     },
     "components": {
         "schemas": {
+            "BaseCollection": {
+                "title": "BaseCollection",
+                "description": "BaseCollection",
+                "properties": {
+                    "links": {
+                        "$ref": "#/components/schemas/Meta"
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/Meta"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "BaseCollection"
+                }
+            },
+            "Meta": {
+                "title": "Meta",
+                "description": "Meta",
+                "properties": {
+                    "current_page": {
+                        "description": "current page",
+                        "type": "number",
+                        "example": 1
+                    },
+                    "from": {
+                        "description": "from",
+                        "type": "number",
+                        "example": 1
+                    },
+                    "path": {
+                        "description": "path",
+                        "type": "string",
+                        "example": "http://localhost:8000/api/products"
+                    },
+                    "per_page": {
+                        "description": "items per page",
+                        "type": "number",
+                        "example": 10
+                    },
+                    "to": {
+                        "description": "to",
+                        "type": "number",
+                        "example": 10
+                    },
+                    "total": {
+                        "description": "total items",
+                        "type": "number",
+                        "example": 99
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Meta"
+                }
+            },
+            "Links": {
+                "title": "Links",
+                "description": "Links",
+                "properties": {
+                    "first": {
+                        "description": "first page",
+                        "type": "string",
+                        "example": "http://localhost:8000/api/products?page=2"
+                    },
+                    "last": {
+                        "description": "last page",
+                        "type": "string",
+                        "example": "http://localhost:8000/api/products?page=69"
+                    },
+                    "prev": {
+                        "description": "previous page",
+                        "type": "string",
+                        "example": "http://localhost:8000/api/products?page=1"
+                    },
+                    "next": {
+                        "description": "next page",
+                        "type": "string",
+                        "example": "http://localhost:8000/api/products?page=3"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Links"
+                }
+            },
+            "ProductCollection": {
+                "title": "ProductCollection",
+                "description": "ProductCollection",
+                "xml": {
+                    "name": "ProductCollection"
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BaseCollection"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "description": "array of products",
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/ProductSchema"
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
             "ProductRequest": {
                 "title": "ProductRequest",
                 "description": "ProductRequest",
@@ -382,16 +495,22 @@
                     "name": "ProductRequest"
                 }
             },
+            "UnauthorizedResponse": {
+                "title": "Unauthorized",
+                "description": "Unauthorized response",
+                "properties": {
+                    "message": {
+                        "description": "Error message"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Unauthorized"
+                }
+            },
             "ProductSchema": {
                 "title": "ProductSchema",
                 "description": "ProductSchema",
-                "required": [
-                    "id",
-                    "name",
-                    "sn",
-                    "price",
-                    "stock"
-                ],
                 "properties": {
                     "id": {
                         "description": "Unique ID",
@@ -422,6 +541,18 @@
                     "stock": {
                         "description": "Product stock",
                         "type": "number",
+                        "example": 20
+                    },
+                    "created_at": {
+                        "description": "Product stock",
+                        "type": "string",
+                        "format": "date",
+                        "example": 20
+                    },
+                    "updated_at": {
+                        "description": "Product stock",
+                        "type": "string",
+                        "format": "date",
                         "example": 20
                     }
                 },

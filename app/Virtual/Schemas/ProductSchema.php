@@ -6,7 +6,6 @@ namespace App\Virtual\Schemas;
  * @OA\Schema(
  *     title="ProductSchema",
  *     description="ProductSchema",
- *     required={"id", "name", "sn", "price", "stock"},
  *     @OA\Xml(
  *         name="ProductSchema"
  *     )
@@ -58,11 +57,10 @@ class ProductSchema
      * @OA\Property(
      *     description="Product price",
      *     example=25000,
-     *     type="number",
      *     format="currency",
      * )
      *
-     * @var string
+     * @var number
      */
     public $price;
 
@@ -70,10 +68,31 @@ class ProductSchema
      * @OA\Property(
      *     description="Product stock",
      *     example=20,
-     *     type="number",
+     * )
+     *
+     * @var number
+     */
+    public $stock;
+
+    /**
+     * @OA\Property(
+     *     description="Product stock",
+     *     format="date",
+     *     example=20,
      * )
      *
      * @var string
      */
-    public $stock;
+    public $created_at;
+
+    /**
+     * @OA\Property(
+     *     description="Product stock",
+     *     format="date",
+     *     example=20,
+     * )
+     *
+     * @var string
+     */
+    public $updated_at;
 }

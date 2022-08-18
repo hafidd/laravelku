@@ -18,7 +18,7 @@ class ProductController extends Controller
      *     tags={"products"},
      *     summary="Display a listing of the products",
      *     @OA\Parameter(name="page", in="query", description="The page number", required=false, @OA\Schema(type="integer", example=1) ),
-     *     @OA\Response(response="200", description="ok", @OA\JsonContent()),
+     *     @OA\Response(response="200", description="ok", @OA\JsonContent(ref="#/components/schemas/ProductCollection")),
      * )
      *
      * Display a listing of the resource.
@@ -72,7 +72,7 @@ class ProductController extends Controller
      *     security={{"bearerAuth":{}}},
      *     @OA\RequestBody( @OA\JsonContent(ref="#/components/schemas/ProductRequest") ),
      *     @OA\Response(response="200", description="ok", @OA\JsonContent(ref="#/components/schemas/ProductSchema")),
-     *     @OA\Response(response="401", description="Unauthorized", @OA\JsonContent()),
+     *     @OA\Response(response="401", description="Unauthorized", @OA\JsonContent(ref="#/components/schemas/UnauthorizedResponse")),
      *     @OA\Response(response="422", description="Unprocessable Content", @OA\JsonContent()),
      * )
      *
